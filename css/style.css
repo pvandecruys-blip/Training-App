@@ -50,8 +50,8 @@ body {
 
 /* ── Navigation ────────────────────────────────────────────────────────────── */
 .navbar {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a2332 100%);
+    border-bottom: 2px solid var(--accent);
     padding: 0 2rem;
     display: flex;
     align-items: center;
@@ -61,6 +61,7 @@ body {
     top: 0;
     z-index: 100;
     backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0, 230, 118, 0.1);
 }
 
 .navbar-brand {
@@ -125,6 +126,9 @@ body {
 
 .section-header {
     margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+    border-image: linear-gradient(90deg, var(--accent), var(--orange), transparent) 1;
 }
 
 .section-header h2 {

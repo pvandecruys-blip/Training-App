@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start \"\" \"c:\\\\Users\\\\Piet Vandecruys\\\\Documents\\\\Training App\\\\index.html\")",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

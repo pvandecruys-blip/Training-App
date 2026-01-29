@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Miles Trainer - Persoonlijk Trainingsmanagement</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- NAVIGATION                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <i class="fas fa-heartbeat"></i>
+            10 MILES TRAINER
+        </a>
+        <ul class="navbar-nav">
+            <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> <span>Home</span></a></li>
+            <li><a href="#" class="nav-link" data-section="schema"><i class="fas fa-calendar-alt"></i> <span>Schema</span></a></li>
+            <li><a href="#" class="nav-link" data-section="registreer"><i class="fas fa-plus-circle"></i> <span>Registreer</span></a></li>
+            <li><a href="#" class="nav-link" data-section="dashboard"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a></li>
+            <li><a href="#" class="nav-link" data-section="historie"><i class="fas fa-history"></i> <span>Historie</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MAIN CONTENT                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <main class="main-content">
+
+        <!-- ─── HOME ──────────────────────────────────────────────────── -->
+        <div id="section-home" class="section active">
+            <div class="section-header">
+                <h2>Welkom, Atleet</h2>
+                <p>Jouw weg naar de 10 Miles van Antwerpen</p>
+            </div>
+
+            <div class="quote-banner" id="motivationalQuote">
+                Consistency beats motivation.
+            </div>
+
+            <!-- Week samenvatting -->
+            <div class="week-summary-card">
+                <div class="card-title"><i class="fas fa-calendar-week"></i> Deze Week</div>
+                <div class="week-stats-grid" id="weekSamenvatting">
+                    <p class="empty-state">Nog geen data voor deze week</p>
+                </div>
+            </div>
+
+            <!-- Training Cards -->
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-play-circle"></i> Vandaag</div>
+                    <div id="vandaagTraining">
+                        <p class="empty-state">Laden...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-forward"></i> Volgende Training</div>
+                    <div id="volgendeTraining">
+                        <p class="empty-state">Laden...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-check-circle"></i> Laatste Training</div>
+                    <div id="laatsteTraining">
+                        <p class="empty-state">Nog geen trainingen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Coach -->
+            <div class="warnings-section">
+                <h3><i class="fas fa-robot"></i> AI Coach</h3>
+                <div id="coachContainer"></div>
+            </div>
+
+            <!-- Warnings -->
+            <div class="warnings-section">
+                <h3><i class="fas fa-bell"></i> Waarschuwingen</h3>
+                <div id="warningsContainer"></div>
+            </div>
+        </div>
+
+        <!-- ─── SCHEMA ────────────────────────────────────────────────── -->
+        <div id="section-schema" class="section">
+            <div class="section-header">
+                <h2>12-Weken Trainingsschema</h2>
+                <p>2 februari – 25 april 2026 | 10 Miles van Antwerpen (16.1 km)</p>
+            </div>
+            <div id="schemaContainer"></div>
+        </div>
+
+        <!-- ─── REGISTREER ────────────────────────────────────────────── -->
+        <div id="section-registreer" class="section">
+            <div class="section-header">
+                <h2>Training Registreren</h2>
+                <p>Log je training en bekijk direct je resultaten</p>
+            </div>
+
+            <div class="form-container">
+                <form id="trainingForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Datum <span class="required">*</span></label>
+                            <input type="date" id="inputDatum" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sport <span class="required">*</span></label>
+                            <select id="inputSport" class="form-control" required>
+                                <option value="Lopen">Lopen</option>
+                                <option value="Fietsen">Fietsen</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Type training <span class="required">*</span></label>
+                            <select id="inputType" class="form-control" required>
+                                <option value="Rustige duurloop">Rustige duurloop</option>
+                                <option value="Tempo">Tempo</option>
+                                <option value="Interval">Interval</option>
+                                <option value="Lange duurloop">Lange duurloop</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Afstand (km) <span class="required">*</span></label>
+                            <input type="number" id="inputAfstand" class="form-control" step="0.1" min="0" placeholder="bijv. 10.5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tijd (mm:ss of minuten) <span class="required">*</span></label>
+                            <input type="text" id="inputTijd" class="form-control" placeholder="bijv. 45:30 of 45" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gemiddelde hartslag (bpm) <span class="required">*</span></label>
+                            <input type="number" id="inputHartslag" class="form-control" min="60" max="220" placeholder="bijv. 155" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Max hartslag (bpm)</label>
+                            <input type="number" id="inputMaxHartslag" class="form-control" min="60" max="220" placeholder="optioneel">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gevoel (1-10): <strong id="gevoelValue">5</strong></label>
+                            <input type="range" id="inputGevoel" class="form-control" min="1" max="10" value="5"
+                                oninput="document.getElementById('gevoelValue').textContent = this.value">
+                            <div class="range-labels"><span>Slecht</span><span>Geweldig</span></div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Opmerking</label>
+                            <textarea id="inputOpmerking" class="form-control" placeholder="Hoe voelde de training? Bijzonderheden?"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-accent">
+                            <i class="fas fa-save"></i> Training Opslaan
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+
+                <div id="trainingResult" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- ─── DASHBOARD ─────────────────────────────────────────────── -->
+        <div id="section-dashboard" class="section">
+            <div class="section-header">
+                <h2>Dashboard</h2>
+                <p>Analyseer je progressie - Word je sneller? Sterker? Klaar voor 16.1 km?</p>
+            </div>
+
+            <div class="stats-grid" id="dashboardStats"></div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-wrapper">
+                        <canvas id="chartAfstand"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-wrapper">
+                        <canvas id="chartHartslag"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-wrapper">
+                        <canvas id="chartTempo"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-wrapper">
+                        <canvas id="chartSnelheid"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── HISTORIE ──────────────────────────────────────────────── -->
+        <div id="section-historie" class="section">
+            <div class="section-header">
+                <h2>Trainingshistorie</h2>
+                <p>Al je trainingen op een rij - exporteer naar Excel of CSV</p>
+            </div>
+            <div id="historieContainer"></div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- SCRIPTS                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <script src="js/trainingsSchema.js"></script>
+    <script src="js/trainingen.js"></script>
+    <script src="js/warnings.js"></script>
+    <script src="js/ml.js"></script>
+    <script src="js/coach.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
